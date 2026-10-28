@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>هدية محمد 🖤</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Arial,sans-serif;background:radial-gradient(circle at top,#20202d,#0b0b10 50%,#050506);color:#f1edf5}
+.container{width:92%;max-width:680px;margin:auto;padding:22px 0 55px}
+.card{background:#141419;border-radius:28px;padding:26px 20px;text-align:center;border:1px solid #37323f;margin-bottom:18px;box-shadow:0 18px 45px #0009}
+h1{font-size:32px}h2{font-size:25px;color:#e9ddff}
+p{font-size:17px;line-height:1.9;color:#c5bacd}
+button{border:1px solid #7c6ca1;padding:14px 24px;border-radius:50px;background:linear-gradient(135deg,#7160a5,#3d3b61);color:white;font-size:18px;font-weight:bold;cursor:pointer}
+.hidden{display:none!important}
+.progressBox{margin:8px 0 25px}.progressText{font-size:20px;margin-bottom:8px}
+.bar{height:22px;background:#302b39;border-radius:20px;overflow:hidden}
+.fill{width:0;height:100%;background:linear-gradient(90deg,#7062a4,#b6a3ed);transition:.7s}
+.stageBadge{display:inline-block;padding:7px 15px;border-radius:30px;background:#272230;border:1px solid #494057;margin-bottom:8px}
+.heartArea,.catchArea{height:300px;position:relative;background:#191820;border:1px solid #34303e;border-radius:25px;overflow:hidden;margin:15px 0}
+.heart{position:absolute;font-size:35px;cursor:pointer;animation:float 1.2s infinite alternate}
+@keyframes float{to{transform:translateY(-10px) rotate(8deg)}}
+.question{font-size:20px;font-weight:bold;margin:20px 0 15px}
+.answers{display:grid;gap:12px}.answer{background:#211e2a;box-shadow:none}
+.bigHeart{font-size:92px;cursor:pointer;margin:18px;display:inline-block}
+.memoryGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+.memory{height:72px;border-radius:15px;background:#282330;border:1px solid #494057;display:flex;justify-content:center;align-items:center;font-size:28px;cursor:pointer}
+.catchItem{position:absolute;font-size:38px;cursor:pointer}
+.reactionBox{height:190px;border-radius:25px;background:#25242c;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;cursor:pointer;margin:20px 0;border:1px solid #45404e}
+.finalMessage{text-align:right;background:#1c1a22;border:1px solid #393241;border-radius:22px;padding:22px;margin-top:20px;line-height:2.1;font-size:18px}
+.small{font-size:14px;opacity:.7}
+.floating{position:fixed;top:-30px;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+textarea{width:100%;min-height:120px;border:1px solid #514660;border-radius:18px;padding:14px;font-size:16px;font-family:Arial;background:#100f14;color:white}
+.aizenFinal{display:block;width:min(100%,320px);max-height:390px;object-fit:cover;margin:0 auto 20px;border-radius:22px;border:1px solid #4d455b}
+.replyBox{margin-top:25px;background:#17151c;border:1px solid #393241;border-radius:22px;padding:20px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="card" id="start">
+<div style="font-size:75px">🎁</div>
+<h1>هدية محمد 🖤</h1>
+<p>محمد حبيبي ❤️<br>دي هدية صغيرة ليك والله 😂<br>لازم تلعب كل المراحل وتشوف المفاجأة اللي في الآخر 👀✨</p>
+<button onclick="startGame()">ابدأ اللعبة 🎮</button>
+</div>
+
+<div class="card hidden" id="game">
+<div class="progressBox">
+<div class="progressText">🖤 نسبة الهدية: <span id="percent">0</span>/100</div>
+<div class="bar"><div class="fill" id="fill"></div></div>
+</div>
+
+<div id="stage1">
+<div class="stageBadge">المرحلة 1 من 7 ❤️</div>
+<h2>اجمع القلوب!</h2>
+<p>عندك 7 قلوب مستخبيين... هاتهم كلهم عشان نبدأ 👀</p>
+<div class="heartArea" id="heartArea"></div>
+<p>القلوب المتبقية: <b id="heartCount">7</b></p>
+</div>
+
+<div id="stage2" class="hidden">
+<div class="stageBadge">المرحلة 2 من 7 🧠</div>
+<h2>اختبار محمد السريع!</h2><p>جاوب صح عشان نكمل 😌</p>
+<div class="question" id="question"></div><div class="answers" id="answers"></div>
+</div>
+
+<div id="stage3" class="hidden">
+<div class="stageBadge">المرحلة 3 من 7 ⚡</div>
+<h2>تحدي السرعة!</h2><p>اضغط على القلب 15 مرة بأسرع ما تقدر 😂❤️</p>
+<div class="bigHeart" onclick="hitHeart()">❤️</div>
+<p>الضغطات: <b id="hits">0</b>/15</p>
+</div>
+
+<div id="stage4" class="hidden">
+<div class="stageBadge">المرحلة 4 من 7 🧩</div>
+<h2>لعبة الذاكرة!</h2><p>طابق كل الرموز المتشابهة.</p>
+<div class="memoryGrid" id="memoryGrid"></div>
+</div>
+
+<div id="stage5" class="hidden">
+<div class="stageBadge">المرحلة 5 من 7 🌟</div>
+<h2>صيد النجوم!</h2><p>اضغط على 8 نجوم ⭐😂</p>
+<div class="catchArea" id="catchArea"></div>
+<p>النجوم: <b id="catchCount">0</b>/8</p>
+</div>
+
+<div id="stage6" class="hidden">
+<div class="stageBadge">المرحلة 6 من 7 🎯</div>
+<h2>اختبار رد الفعل!</h2>
+<p>استنى لحد ما الشاشة تقول «اضغط الآن!» وبعدين اضغط بسرعة.</p>
+<div class="reactionBox" id="reactionBox" onclick="reactionClick()">استنى... ⏳</div>
+<p id="reactionResult"></p>
+</div>
+
+<div id="stage7" class="hidden">
+<div class="stageBadge">المرحلة 7 من 7 🎁</div>
+<h2>وصلنا للنهاية! 🎉</h2><div style="font-size:80px">🖤</div>
+<p>وصلت لآخر مرحلة يا محمد 👀❤️</p>
+<p>اضغط وشوف المفاجأة 🎁</p>
+<button onclick="finishGame()">افتح المفاجأة 💌</button>
+</div>
+</div>
+
+<div class="card hidden" id="final">
+<div style="font-size:65px">🎂🖤🎁</div>
+<h1>100/100 🖤</h1>
+<h2>كل سنة وانت طيب يا محمد 🥹</h2>
+
+<img class="aizenFinal"
+src="https://bleach-anime.com/assets/img/character/face_50.png"
+alt="آيزن من أنمي بليتش"
+onerror="this.onerror=null;this.src='https://static.wikia.nocookie.net/bleach/images/9/9f/Sosuke_Aizen.png'">
+
+<div class="finalMessage">
+كل سنه وانت طيب يا مز وعقبال الـ100 سنه<br>
+يا من اغلي ناس عندي بحبك يبني والله وكان نفسي تكون جنبي بس للاسف المسافه لا تسمح<br>
+وبحبك يسطا وبجد انت من اغلي واحسن وافضل ناس عندي ويارب ما اتحرم منك وان شاء الله تحقق كل الي نفسك فيه بحبك يسطا
+</div>
+
+<p class="small">اتعملت مخصوص عشانك 🖤✨</p>
+
+<div class="replyBox">
+<h3>💌 ودلوقتي دورك يا محمد</h3>
+<p>وش حاب تقولي؟ اكتب أي كلمة أو رسالة نفسك فيها ❤️</p>
+<textarea id="mohamedReply" placeholder="اكتب رسالتك هنا..."></textarea>
+<button onclick="saveReply()" style="margin-top:12px">إرسال رسالتي 💌</button>
+<p id="replyStatus" class="small"></p>
+</div>
+</div>
+</div>
+
+<script>
+let love=0,stage=1;
+function startGame(){
+document.getElementById("start").classList.add("hidden");
+document.getElementById("game").classList.remove("hidden");
+createHearts();
+}
+function addLove(amount){
+love=Math.min(100,love+amount);
+document.getElementById("percent").innerText=love;
+document.getElementById("fill").style.width=love+"%";
+}
+function showStage(n){
+for(let i=1;i<=7;i++)document.getElementById("stage"+i).classList.add("hidden");
+document.getElementById("stage"+n).classList.remove("hidden");
+stage=n;
+if(n===2)loadQuestion();
+if(n===4)startMemory();
+if(n===5)startCatch();
+if(n===6)startReaction();
+}
+
+let heartsLeft=7;
+function createHearts(){
+const area=document.getElementById("heartArea");
+area.innerHTML="";heartsLeft=7;
+document.getElementById("heartCount").innerText=heartsLeft;
+for(let i=0;i<7;i++){
+const h=document.createElement("div");
+h.className="heart";h.innerText=["❤️","🖤","💜"][i%3];
+h.style.left=Math.random()*84+"%";
+h.style.top=Math.random()*78+"%";
+h.onclick=()=>{
+h.remove();heartsLeft--;
+document.getElementById("heartCount").innerText=heartsLeft;
+if(heartsLeft===0){addLove(12.5);setTimeout(()=>showStage(2),500);}
+};
+area.appendChild(h);
+}
+}
+
+let qIndex=0;
+const questions=[
+{q:"إيه أكتر حاجة يستاهلها محمد في عيد ميلاده؟",a:["يوم حلو ومبسوط ❤️","واجبات زيادة 😂","نكد","ولا حاجة"],correct:0},
+{q:"لو قدام محمد أمنية واحدة، يختار إيه؟",a:["سنة سعيدة ومليانة حاجات حلوة ✨","يضيع الجوال 😂","ينام طول السنة","ينسى عيد ميلاده"],correct:0},
+{q:"الهدية دي معناها إيه؟ 😂",a:["إني نسيت شوية 😭","إني عملتها مخصوص ليك 🖤","إني ما أهتم","ولا شيء"],correct:1},
+{q:"كام من 100 يستحق محمد يوم حلو وسعيد؟",a:["50","75","99","100 🖤"],correct:3}
+];
+function loadQuestion(){
+const q=questions[qIndex],box=document.getElementById("answers");
+document.getElementById("question").innerText=q.q;
+box.innerHTML="";
+q.a.forEach((txt,i)=>{
+const b=document.createElement("button");
+b.className="answer";b.innerText=txt;
+b.onclick=()=>{
+if(i===q.correct){
+qIndex++;
+if(qIndex===questions.length){
+addLove(12.5);qIndex=0;
+setTimeout(()=>showStage(3),500);
+}else loadQuestion();
+}else b.innerText="غلط 😂 جرب تاني";
+};
+box.appendChild(b);
+});
+}
+
+let hits=0;
+function hitHeart(){
+hits++;document.getElementById("hits").innerText=hits;
+if(hits>=15){
+hits=0;addLove(12.5);
+setTimeout(()=>{document.getElementById("hits").innerText=0;showStage(4);},500);
+}
+}
+
+let firstCard=null,secondCard=null,locked=false,matched=0;
+function startMemory(){
+const grid=document.getElementById("memoryGrid");
+grid.innerHTML="";firstCard=secondCard=null;locked=false;matched=0;
+let symbols=["❤️","🎀","🌸","🖤","⭐","🦋"];
+let cards=[...symbols,...symbols].sort(()=>Math.random()-.5);
+cards.forEach(symbol=>{
+const c=document.createElement("div");
+c.className="memory";c.innerText="❓";c.dataset.symbol=symbol;
+c.onclick=()=>{
+if(locked||c.innerText!=="❓")return;
+c.innerText=symbol;
+if(!firstCard)firstCard=c;
+else{
+secondCard=c;locked=true;
+if(firstCard.dataset.symbol===secondCard.dataset.symbol){
+matched++;firstCard=secondCard=null;locked=false;
+if(matched===symbols.length){
+addLove(12.5);setTimeout(()=>showStage(5),600);
+}
+}else setTimeout(()=>{
+firstCard.innerText="❓";secondCard.innerText="❓";
+firstCard=secondCard=null;locked=false;
+},650);
+}
+};
+grid.appendChild(c);
+});
+}
+
+let catchCount=0;
+function startCatch(){
+catchCount=0;document.getElementById("catchCount").innerText=0;
+spawnCatch();
+}
+function spawnCatch(){
+const area=document.getElementById("catchArea");
+area.innerHTML="";
+const item=document.createElement("div");
+item.className="catchItem";item.innerText="⭐";
+item.style.left=(5+Math.random()*82)+"%";
+item.style.top=(5+Math.random()*78)+"%";
+item.onclick=()=>{
+catchCount++;document.getElementById("catchCount").innerText=catchCount;
+if(catchCount>=8){
+area.innerHTML="";addLove(12.5);setTimeout(()=>showStage(6),600);
+}else spawnCatch();
+};
+area.appendChild(item);
+}
+
+let reactionReady=false,reactionStart=0,reactionTimer;
+function startReaction(){
+const box=document.getElementById("reactionBox");
+document.getElementById("reactionResult").innerText="";
+reactionReady=false;box.innerText="استنى... ⏳";
+box.style.background="#25242c";
+clearTimeout(reactionTimer);
+reactionTimer=setTimeout(()=>{
+reactionReady=true;reactionStart=performance.now();
+box.innerText="اضغط الآن! ⚡";box.style.background="#4a405f";
+},1200+Math.random()*2500);
+}
+function reactionClick(){
+const box=document.getElementById("reactionBox");
+if(!reactionReady){
+clearTimeout(reactionTimer);box.innerText="بدرييي 😂 اضغط مرة ثانية";
+setTimeout(startReaction,900);return;
+}
+const ms=Math.round(performance.now()-reactionStart);
+document.getElementById("reactionResult").innerText="رد فعلك: "+ms+" مللي ثانية ⚡";
+reactionReady=false;addLove(12.5);
+setTimeout(()=>showStage(7),900);
+}
+
+function finishGame(){
+for(let i=1;i<=7;i++)document.getElementById("stage"+i).classList.add("hidden");
+document.querySelector(".progressBox").classList.add("hidden");
+document.getElementById("final").classList.remove("hidden");
+confetti();
+}
+function confetti(){
+for(let i=0;i<45;i++){
+const x=document.createElement("div");
+x.className="floating";
+x.innerText=["❤️","🖤","🎁","✨","🌸","⭐"][Math.floor(Math.random()*6)];
+x.style.left=Math.random()*100+"%";
+x.style.animationDuration=(3+Math.random()*4)+"s";
+x.style.fontSize=(18+Math.random()*25)+"px";
+document.body.appendChild(x);
+setTimeout(()=>x.remove(),7500);
+}
+}
+
+async function saveReply(){
+const text=document.getElementById("mohamedReply").value.trim();
+const status=document.getElementById("replyStatus");
+if(!text){status.innerText="اكتب حاجة الأول 😂🖤";return;}
+status.innerText="جاري إرسال الرسالة... 💌";
+try{
+const response=await fetch("https://formspree.io/f/xppzronk",{
+method:"POST",
+headers:{"Content-Type":"application/json","Accept":"application/json"},
+body:JSON.stringify({message:text,subject:"رسالة من محمد 💌"})
+});
+if(response.ok){
+status.innerText="🖤 وصلت رسالتك! شكرًا يا محمد";
+document.getElementById("mohamedReply").value="";
+}else status.innerText="❌ حصلت مشكلة في الإرسال، جرب تاني.";
+}catch(error){
+status.innerText="❌ تأكد من الإنترنت وجرب تاني.";
+}
+}
+</script>
+</body>
+</html>
